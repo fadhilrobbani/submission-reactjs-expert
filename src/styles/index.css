@@ -9,7 +9,3 @@
 html {
   @apply scroll-smooth;
 }
-
-main {
-  @apply bg-slate-800;
-}
