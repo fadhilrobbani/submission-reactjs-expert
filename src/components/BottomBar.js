@@ -1,9 +1,22 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {} from 'react-icons';
+import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
+import { asyncUnsetAuthUser } from '../states/authUser/action';
 
 function BottomBar() {
+  const { authUser = null } = useSelector((states) => states);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onLogoutHandler = () => {
+    if (authUser) {
+      dispatch(asyncUnsetAuthUser());
+      navigate('/login');
+    } else {
+      navigate('/login');
+    }
+  };
   return (
     <div>
       <div className="btm-nav bg-slate-700 text-slate-100">
@@ -32,30 +45,13 @@ function BottomBar() {
         </button>
         <button
           className={
-            window.location.pathname === '/leaderbords'
+            window.location.pathname === '/leaderboards'
               ? 'active bg-slate-600'
               : ''
           }
           type="button"
-          onClick={() => navigate('/leaderbords')}
+          onClick={() => navigate('/leaderboards')}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span className="btm-nav-label">Warnings</span>
-        </button>
-        <button type="button" onClick={() => navigate('/login')}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -70,7 +66,22 @@ function BottomBar() {
               d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
             />
           </svg>
-          <span className="btm-nav-label">Login</span>
+          <span className="btm-nav-label">Leaderboards</span>
+        </button>
+        <button
+          type="button"
+          className={
+            window.location.pathname === '/login' ? 'active bg-slate-600' : ''
+          }
+          onClick={onLogoutHandler}
+        >
+          {!authUser ? (
+            <AiOutlineLogin size={25} />
+          ) : (
+            <AiOutlineLogout size={25} />
+          )}
+
+          <span className="btm-nav-label">{authUser ? 'logout' : 'login'}</span>
         </button>
       </div>
     </div>

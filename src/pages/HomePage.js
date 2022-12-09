@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
-export default function HomePage() {
+function HomePage() {
+  const { authUser } = useSelector((states) => states);
+  let firstRun = useRef(true);
+  useEffect(() => {
+    if (firstRun) {
+      console.log(authUser);
+      firstRun = false;
+    }
+  }, []);
   return (
     <div className=" text-slate-200 justify-center items-center p-10 flex flex-col gap-7">
       <div className="bg-slate-600 w-3/4 p-5 h-full rounded-lg shadow-lg">
@@ -27,3 +36,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+export default HomePage;

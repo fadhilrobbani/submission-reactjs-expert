@@ -45,7 +45,7 @@ function LoginInput({ onLogin }) {
           </span>
         </span>
         <button
-          onClick={onLogin}
+          onClick={() => onLogin({ email, password })}
           type="button"
           className=" text-slate-100 bg-teal-700 px-3 py-2 rounded-md hover:bg-teal-800 "
         >
