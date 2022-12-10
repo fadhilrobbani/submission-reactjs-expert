@@ -1,4 +1,5 @@
-import { showLoading, hideLoadings } from 'react-redux-loading-bar';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import swal from 'sweetalert';
 import api from '../../utils/api';
 
 const ActionType = {
@@ -20,9 +21,9 @@ function asyncRegisterUser({ name, email, password }) {
     try {
       await api.register({ name, email, password });
     } catch (error) {
-      alert(error.message);
+      swal(error.message);
     }
-    dispatch(hideLoadings());
+    dispatch(hideLoading());
   };
 }
 
