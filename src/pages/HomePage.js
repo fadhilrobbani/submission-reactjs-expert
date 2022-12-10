@@ -11,7 +11,7 @@ function HomePage() {
     }
   }, []);
   return (
-    <div className=" text-slate-200 justify-center items-center p-10 flex flex-col gap-7">
+    <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
       <div className="bg-slate-600 w-3/4 p-5 h-full rounded-lg shadow-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto numquam
         imos suscipit totam voluptate reprehenderit dolor. Autem. Dolor magnam
