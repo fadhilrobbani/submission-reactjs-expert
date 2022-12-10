@@ -19,7 +19,7 @@ function BottomBar() {
   };
   return (
     <div>
-      <div className="btm-nav bg-slate-700 text-slate-100">
+      <div className="btm-nav z-50 bg-slate-700 text-slate-100">
         <button
           type="button"
           className={
