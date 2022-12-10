@@ -14,6 +14,7 @@ function RegisterPage() {
       return;
     }
     dispatch(asyncRegisterUser({ name, email, password }));
+    swal('Success to register the user');
     navigate('/login');
   };
   return (
