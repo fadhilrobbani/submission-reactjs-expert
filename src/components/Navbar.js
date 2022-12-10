@@ -2,7 +2,9 @@ import React from 'react';
 
 function Navbar() {
   return (
-    <div className="bg-slate-700 text-slate-100 m-0 p-3 sticky ">FORUM APP</div>
+    <div className="navbar bg-slate-700 text-primary-content fixed top-0">
+      <p className="btn btn-ghost normal-case text-xl">FORUM APP</p>
+    </div>
   );
 }
 
