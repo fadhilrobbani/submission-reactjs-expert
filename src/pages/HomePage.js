@@ -2,6 +2,11 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 import ThreadsList from '../components/ThreadsList';
+import {
+  asyncDownVotesThread,
+  asyncNeutralVotesThread,
+  asyncUpVotesThread,
+} from '../states/threads/action';
 
 function HomePage() {
   const {
@@ -11,9 +16,15 @@ function HomePage() {
   } = useSelector((states) => states);
   const dispatch = useDispatch();
 
-  const onUpVotesHandler = () => {};
-  const onDownVotesHandler = () => {};
-  const onNeutralVotesHandler = () => {};
+  const onUpVotesHandler = (id) => {
+    dispatch(asyncUpVotesThread(id));
+  };
+  const onDownVotesHandler = (id) => {
+    dispatch(asyncDownVotesThread(id));
+  };
+  const onNeutralVotesHandler = ({ id, voteTypeBefore }) => {
+    dispatch(asyncNeutralVotesThread({ id, voteTypeBefore }));
+  };
 
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());

@@ -70,7 +70,7 @@ function ThreadItem({
               <AiFillLike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onNeutralVotesClick()}
+                onClick={() => onNeutralVotesClick({ id, voteTypeBefore: 1 })}
               />
               <p> &nbsp;{upVotesBy.length}</p>
             </div>
@@ -79,7 +79,7 @@ function ThreadItem({
               <AiOutlineLike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onUpVotesClick()}
+                onClick={() => onUpVotesClick(id)}
               />
               <p> &nbsp;{upVotesBy.length}</p>
             </div>
@@ -90,7 +90,7 @@ function ThreadItem({
               <AiFillDislike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onNeutralVotesClick()}
+                onClick={() => onNeutralVotesClick({ id, voteTypeBefore: -1 })}
               />
               <p> &nbsp;{downVotesBy.length}</p>
             </div>
@@ -99,7 +99,7 @@ function ThreadItem({
               <AiOutlineDislike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onDownVotesClick()}
+                onClick={() => onDownVotesClick(id)}
               />
               <p> &nbsp;{downVotesBy.length}</p>
             </div>
