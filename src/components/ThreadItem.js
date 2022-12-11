@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  AiOutlineLike,
+  AiOutlineDislike,
+  AiFillLike,
+  AiFillDislike,
+} from 'react-icons/ai';
 import parse from 'html-react-parser';
+import swal from 'sweetalert';
+import postedAt from '../utils';
 
 function ThreadItem({
   id,
@@ -13,27 +21,93 @@ function ThreadItem({
   totalComments,
   owner,
   authUserId,
+  onUpVotes,
+  onDownVotes,
+  onNeutralVotes,
 }) {
+  const isThreadUpVotes = upVotesBy.includes(authUserId);
+  const isThreadDownVotes = downVotesBy.includes(authUserId);
+
+  const onUpVotesClick = () => {
+    if (!authUserId) {
+      swal('You must login to like/dislike this post');
+      return;
+    }
+    onUpVotes(id);
+  };
+
+  const onDownVotesClick = () => {
+    if (!authUserId) {
+      swal('You must login to like/dislike this post');
+      return;
+    }
+    onDownVotes(id);
+  };
+
+  const onNeutralVotesClick = () => {
+    if (!authUserId) {
+      swal('You must login to like/dislike this post');
+      return;
+    }
+    onNeutralVotes(id);
+  };
+
   return (
-    <div className="bg-slate-600 w-3/4 p-5 h-full rounded-lg shadow-lg">
-      <p>{id}</p>
-      <p>{title}</p>
-      <div>{parse(body)}</div>
-      <p>{category}</p>
-      <p>{createdAt}</p>
-      <div>
-        {upVotesBy.map((data) => (
-          <p key={data}>{data}</p>
-        ))}
+    <div className="bg-slate-600 w-3/4 p-5 h-full rounded-lg ">
+      <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
+        <p>
+          #{category} {id}
+        </p>
       </div>
-      <div>
-        {downVotesBy.map((data) => (
-          <p key={data}>{data}</p>
-        ))}
+      <h1 className="text-lg font-bold mb-5 mt-2">{title}</h1>
+      <div className="line-clamp-4 mb-5">
+        {parse(body)}
+        {totalComments}
       </div>
-      <p>{totalComments}</p>
-      <p>{owner.name}</p>
-      <div>{authUserId}</div>
+      <div className="flex flex-row gap-4  items-center p-2 w-fit rounded-lg bg-slate-500">
+        {isThreadUpVotes ? (
+          <div className="flex flex-row">
+            <AiFillLike
+              className="hover:cursor-pointer"
+              size={25}
+              onClick={() => onNeutralVotesClick()}
+            />
+            <p>{upVotesBy.length}</p>
+          </div>
+        ) : (
+          <div className="flex flex-row">
+            <AiOutlineLike
+              className="hover:cursor-pointer"
+              size={25}
+              onClick={() => onUpVotesClick()}
+            />
+            <p>{upVotesBy.length}</p>
+          </div>
+        )}
+
+        {isThreadDownVotes ? (
+          <div className="flex flex-row">
+            <AiFillDislike
+              className="hover:cursor-pointer"
+              size={25}
+              onClick={() => onNeutralVotesClick()}
+            />
+            <p>{downVotesBy.length}</p>
+          </div>
+        ) : (
+          <div className="flex flex-row">
+            <AiOutlineDislike
+              className="hover:cursor-pointer"
+              size={25}
+              onClick={() => onDownVotesClick()}
+            />
+            <p>{downVotesBy.length}</p>
+          </div>
+        )}
+
+        <div className="font-semibold">Created By {owner.name}</div>
+        <div className="font-semibold">{postedAt(createdAt)}</div>
+      </div>
     </div>
   );
 }
@@ -54,6 +128,9 @@ ThreadItem.propTypes = {
     avatar: PropTypes.string.isRequired,
   }).isRequired,
   authUserId: PropTypes.string.isRequired,
+  onUpVotes: PropTypes.func.isRequired,
+  onDownVotes: PropTypes.func.isRequired,
+  onNeutralVotes: PropTypes.func.isRequired,
 };
 
 export default ThreadItem;

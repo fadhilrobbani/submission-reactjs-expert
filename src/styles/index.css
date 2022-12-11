@@ -9,3 +9,7 @@
 html {
   @apply scroll-smooth;
 }
+
+main {
+  @apply mt-12;
+}

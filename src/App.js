@@ -27,7 +27,7 @@ function App() {
         <Navbar />
         <Loading />
       </header>
-      <main className="mt-12">
+      <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />

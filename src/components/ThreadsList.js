@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ThreadItem from './ThreadItem';
 
-function ThreadsList({ threads }) {
+function ThreadsList({ threads, onUpVotes, onDownVotes, onNeutralVotes }) {
   return (
-    <div>
+    <div className="flex flex-col gap-5 pt-0 justify-center items-center p-5">
       {threads.map((thread) => (
         <ThreadItem
           key={thread.id}
@@ -18,6 +18,9 @@ function ThreadsList({ threads }) {
           totalComments={thread.totalComments}
           owner={thread.owner}
           authUserId={thread.authUserId}
+          onUpVotes={onUpVotes}
+          onDownVotes={onDownVotes}
+          onNeutralVotes={onNeutralVotes}
         />
       ))}
     </div>
@@ -26,5 +29,8 @@ function ThreadsList({ threads }) {
 
 ThreadsList.propTypes = {
   threads: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onUpVotes: PropTypes.func.isRequired,
+  onDownVotes: PropTypes.func.isRequired,
+  onNeutralVotes: PropTypes.func.isRequired,
 };
 export default ThreadsList;

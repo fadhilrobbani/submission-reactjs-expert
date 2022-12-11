@@ -11,6 +11,10 @@ function HomePage() {
   } = useSelector((states) => states);
   const dispatch = useDispatch();
 
+  const onUpVotesHandler = () => {};
+  const onDownVotesHandler = () => {};
+  const onNeutralVotesHandler = () => {};
+
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
@@ -22,7 +26,12 @@ function HomePage() {
   }));
   return (
     <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
-      <ThreadsList threads={threadsList} />
+      <ThreadsList
+        threads={threadsList}
+        onUpVotes={onUpVotesHandler}
+        onDownVotes={onDownVotesHandler}
+        onNeutralVotes={onNeutralVotesHandler}
+      />
     </div>
   );
 }
