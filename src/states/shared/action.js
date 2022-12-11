@@ -14,7 +14,6 @@ function asyncPopulateUsersAndThreads() {
       dispatch(receiveThreadsActionCreator(threads));
     } catch (error) {
       swal(error.message);
-      console.log('error lo');
     }
     dispatch(hideLoading());
   };

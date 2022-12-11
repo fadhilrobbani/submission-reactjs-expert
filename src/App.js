@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import BottomBar from './components/BottomBar';
-import Loading from './components/Loading';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import LeaderboardsPage from './pages/LeaderboardsPage';
@@ -25,7 +24,6 @@ function App() {
     <>
       <header>
         <Navbar />
-        <Loading />
       </header>
       <main>
         <Routes>

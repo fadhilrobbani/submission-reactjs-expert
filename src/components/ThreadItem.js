@@ -6,6 +6,7 @@ import {
   AiFillLike,
   AiFillDislike,
 } from 'react-icons/ai';
+import { BiCommentDetail } from 'react-icons/bi';
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
 import postedAt from '../utils';
@@ -53,58 +54,61 @@ function ThreadItem({
   };
 
   return (
-    <div className="bg-slate-600 w-3/4 p-5 h-full rounded-lg ">
+    <div className="bg-slate-600 w-full md:w-3/4 p-5 h-full rounded-lg ">
       <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
-        <p>
-          #{category} {id}
-        </p>
+        <p>#{category}</p>
       </div>
       <h1 className="text-lg font-bold mb-5 mt-2">{title}</h1>
       <div className="line-clamp-4 mb-5">
         {parse(body)}
         {totalComments}
       </div>
-      <div className="flex flex-row gap-4  items-center p-2 w-fit rounded-lg bg-slate-500">
-        {isThreadUpVotes ? (
-          <div className="flex flex-row">
-            <AiFillLike
-              className="hover:cursor-pointer"
-              size={25}
-              onClick={() => onNeutralVotesClick()}
-            />
-            <p>{upVotesBy.length}</p>
-          </div>
-        ) : (
-          <div className="flex flex-row">
-            <AiOutlineLike
-              className="hover:cursor-pointer"
-              size={25}
-              onClick={() => onUpVotesClick()}
-            />
-            <p>{upVotesBy.length}</p>
-          </div>
-        )}
+      <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-500">
+        <div className="flex flex-row gap-4">
+          {isThreadUpVotes ? (
+            <div className="flex flex-row">
+              <AiFillLike
+                className="hover:cursor-pointer"
+                size={25}
+                onClick={() => onNeutralVotesClick()}
+              />
+              <p> &nbsp;{upVotesBy.length}</p>
+            </div>
+          ) : (
+            <div className="flex flex-row">
+              <AiOutlineLike
+                className="hover:cursor-pointer"
+                size={25}
+                onClick={() => onUpVotesClick()}
+              />
+              <p> &nbsp;{upVotesBy.length}</p>
+            </div>
+          )}
 
-        {isThreadDownVotes ? (
+          {isThreadDownVotes ? (
+            <div className="flex flex-row">
+              <AiFillDislike
+                className="hover:cursor-pointer"
+                size={25}
+                onClick={() => onNeutralVotesClick()}
+              />
+              <p> &nbsp;{downVotesBy.length}</p>
+            </div>
+          ) : (
+            <div className="flex flex-row">
+              <AiOutlineDislike
+                className="hover:cursor-pointer"
+                size={25}
+                onClick={() => onDownVotesClick()}
+              />
+              <p> &nbsp;{downVotesBy.length}</p>
+            </div>
+          )}
           <div className="flex flex-row">
-            <AiFillDislike
-              className="hover:cursor-pointer"
-              size={25}
-              onClick={() => onNeutralVotesClick()}
-            />
-            <p>{downVotesBy.length}</p>
+            <BiCommentDetail size={25} />
+            <p> &nbsp;{totalComments}</p>
           </div>
-        ) : (
-          <div className="flex flex-row">
-            <AiOutlineDislike
-              className="hover:cursor-pointer"
-              size={25}
-              onClick={() => onDownVotesClick()}
-            />
-            <p>{downVotesBy.length}</p>
-          </div>
-        )}
-
+        </div>
         <div className="font-semibold">Created By {owner.name}</div>
         <div className="font-semibold">{postedAt(createdAt)}</div>
       </div>
