@@ -17,14 +17,14 @@ function HomePage() {
   } = useSelector((states) => states);
   const dispatch = useDispatch();
 
-  const onUpVotesHandler = (id) => {
-    dispatch(asyncUpVotesThread(id));
+  const onUpVotesHandler = (threadId) => {
+    dispatch(asyncUpVotesThread(threadId));
   };
-  const onDownVotesHandler = (id) => {
-    dispatch(asyncDownVotesThread(id));
+  const onDownVotesHandler = (threadId) => {
+    dispatch(asyncDownVotesThread(threadId));
   };
-  const onNeutralVotesHandler = ({ id, voteTypeBefore }) => {
-    dispatch(asyncNeutralVotesThread({ id, voteTypeBefore }));
+  const onNeutralVotesHandler = ({ threadId, voteTypeBefore }) => {
+    dispatch(asyncNeutralVotesThread({ threadId, voteTypeBefore }));
   };
 
   useEffect(() => {

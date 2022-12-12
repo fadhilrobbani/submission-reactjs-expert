@@ -8,7 +8,7 @@ function ThreadsList({ threads, onUpVotes, onDownVotes, onNeutralVotes }) {
       {threads.map((thread) => (
         <ThreadItem
           key={thread.id}
-          id={thread.id}
+          threadId={thread.id}
           title={thread.title}
           body={thread.body}
           category={thread.category}

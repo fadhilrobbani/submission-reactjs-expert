@@ -75,12 +75,14 @@ function asyncUpVotesThread(threadId) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     dispatch(showLoading());
-    dispatch(upVotesThreadCreator({ threadId, authUser }));
+    dispatch(upVotesThreadCreator({ threadId, authUserId: authUser.id }));
+    console.log('ketrigger');
+
     try {
       await api.upVoteThread(threadId);
     } catch (error) {
       swal(error.message);
-      dispatch(downVotesThreadCreator({ threadId, authUser }));
+      dispatch(downVotesThreadCreator({ threadId, authUserId: authUser.id }));
     }
     dispatch(hideLoading());
   };
@@ -90,12 +92,14 @@ function asyncDownVotesThread(threadId) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     dispatch(showLoading());
-    dispatch(downVotesThreadCreator({ threadId, authUser }));
+    dispatch(downVotesThreadCreator({ threadId, authUserId: authUser.id }));
+    console.log('ketrigger');
+
     try {
       await api.downVoteThread(threadId);
     } catch (error) {
       swal(error.message);
-      dispatch(upVotesThreadCreator({ threadId, authUser }));
+      dispatch(upVotesThreadCreator({ threadId, authUserId: authUser.id }));
     }
     dispatch(hideLoading());
   };
@@ -105,17 +109,19 @@ function asyncNeutralVotesThread({ threadId, voteTypeBefore }) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     dispatch(showLoading());
-    dispatch(neutralVotesThreadCreator({ threadId, authUser }));
+    console.log(threadId);
+    console.log(voteTypeBefore);
+    dispatch(neutralVotesThreadCreator({ threadId, authUserId: authUser.id }));
     try {
       await api.neutralVoteThread(threadId);
     } catch (error) {
       swal(error.message);
       if (voteTypeBefore === 1) {
-        dispatch(upVotesThreadCreator({ threadId, authUser }));
+        dispatch(upVotesThreadCreator({ threadId, authUserId: authUser.id }));
       }
 
       if (voteTypeBefore === -1) {
-        dispatch(downVotesThreadCreator({ threadId, authUser }));
+        dispatch(downVotesThreadCreator({ threadId, authUserId: authUser.id }));
       }
     }
     dispatch(hideLoading());

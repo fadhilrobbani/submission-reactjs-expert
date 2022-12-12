@@ -12,7 +12,7 @@ import swal from 'sweetalert';
 import postedAt from '../utils';
 
 function ThreadItem({
-  id,
+  threadId,
   title,
   body,
   category,
@@ -28,13 +28,15 @@ function ThreadItem({
 }) {
   const isThreadUpVotes = upVotesBy.includes(authUserId);
   const isThreadDownVotes = downVotesBy.includes(authUserId);
+  console.log(`upvotes: ${upVotesBy}  |   `);
+  console.log(`downvotes: ${downVotesBy}`);
 
   const onUpVotesClick = () => {
     if (!authUserId) {
       swal('You must login to like/dislike this post');
       return;
     }
-    onUpVotes(id);
+    onUpVotes(threadId);
   };
 
   const onDownVotesClick = () => {
@@ -42,15 +44,15 @@ function ThreadItem({
       swal('You must login to like/dislike this post');
       return;
     }
-    onDownVotes(id);
+    onDownVotes(threadId);
   };
 
-  const onNeutralVotesClick = () => {
+  const onNeutralVotesClick = ({ voteTypeBefore }) => {
     if (!authUserId) {
       swal('You must login to like/dislike this post');
       return;
     }
-    onNeutralVotes(id);
+    onNeutralVotes({ threadId, voteTypeBefore });
   };
 
   return (
@@ -67,7 +69,9 @@ function ThreadItem({
               <AiFillLike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onNeutralVotesClick({ id, voteTypeBefore: 1 })}
+                onClick={() =>
+                  onNeutralVotesClick({ threadId, voteTypeBefore: 1 })
+                }
               />
               <p> &nbsp;{upVotesBy.length}</p>
             </div>
@@ -76,7 +80,7 @@ function ThreadItem({
               <AiOutlineLike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onUpVotesClick(id)}
+                onClick={() => onUpVotesClick(threadId)}
               />
               <p> &nbsp;{upVotesBy.length}</p>
             </div>
@@ -87,7 +91,9 @@ function ThreadItem({
               <AiFillDislike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onNeutralVotesClick({ id, voteTypeBefore: -1 })}
+                onClick={() =>
+                  onNeutralVotesClick({ threadId, voteTypeBefore: -1 })
+                }
               />
               <p> &nbsp;{downVotesBy.length}</p>
             </div>
@@ -96,13 +102,13 @@ function ThreadItem({
               <AiOutlineDislike
                 className="hover:cursor-pointer"
                 size={25}
-                onClick={() => onDownVotesClick(id)}
+                onClick={() => onDownVotesClick(threadId)}
               />
               <p> &nbsp;{downVotesBy.length}</p>
             </div>
           )}
           <div className="flex flex-row">
-            <BiCommentDetail size={25} />
+            <BiCommentDetail size={25} className="hover:cursor-pointer" />
             <p> &nbsp;{totalComments}</p>
           </div>
         </div>
@@ -114,7 +120,7 @@ function ThreadItem({
 }
 
 ThreadItem.propTypes = {
-  id: PropTypes.string.isRequired,
+  threadId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
