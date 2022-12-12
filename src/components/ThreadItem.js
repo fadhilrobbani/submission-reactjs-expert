@@ -59,10 +59,7 @@ function ThreadItem({
         <p>#{category}</p>
       </div>
       <h1 className="text-lg font-bold mb-5 mt-2">{title}</h1>
-      <div className="line-clamp-4 mb-5">
-        {parse(body)}
-        {totalComments}
-      </div>
+      <div className="line-clamp-4 mb-5">{parse(body)}</div>
       <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-500">
         <div className="flex flex-row gap-4">
           {isThreadUpVotes ? (
@@ -109,7 +106,7 @@ function ThreadItem({
             <p> &nbsp;{totalComments}</p>
           </div>
         </div>
-        <div className="font-semibold">Created By {owner.name}</div>
+        <div className="font-semibold">Created By {owner.name || 'null'}</div>
         <div className="font-semibold">{postedAt(createdAt)}</div>
       </div>
     </div>

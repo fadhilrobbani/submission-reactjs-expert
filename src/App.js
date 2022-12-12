@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import LeaderboardsPage from './pages/LeaderboardsPage';
 import LoginPage from './pages/LoginPage';
+import NewThreadPage from './pages/NewThreadPage';
+import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
 import { asyncPreloadProcess } from './states/isPreload/action';
 
@@ -28,9 +30,11 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/new" element={<NewThreadPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/leaderboards" element={<LeaderboardsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <footer>

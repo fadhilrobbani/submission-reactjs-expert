@@ -18,6 +18,8 @@ function threadsReducer(threads = [], action = {}) {
         }
         return thread;
       });
+    case ActionType.ADD_THREAD:
+      return [action.payload.thread, ...threads];
     case ActionType.DOWN_VOTES_THREADS:
       return threads.map((thread) => {
         if (thread.id !== action.payload.threadId) return thread;

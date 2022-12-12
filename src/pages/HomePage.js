@@ -7,6 +7,7 @@ import {
   asyncNeutralVotesThread,
   asyncUpVotesThread,
 } from '../states/threads/action';
+import AddThreadButton from '../components/AddThreadButton';
 
 function HomePage() {
   const {
@@ -43,6 +44,7 @@ function HomePage() {
         onDownVotes={onDownVotesHandler}
         onNeutralVotes={onNeutralVotesHandler}
       />
+      <AddThreadButton />
     </div>
   );
 }

@@ -7,7 +7,7 @@ const ActionType = {
   UP_VOTES_THREADS: 'UP_VOTES_THREADS',
   DOWN_VOTES_THREADS: 'DOWN_VOTES_THREADS',
   NEUTRAL_VOTES_THREADS: 'NEUTRAL_VOTES_THREADS',
-  // ADD_THREAD: 'ADD_THREAD',
+  ADD_THREAD: 'ADD_THREAD',
 };
 
 function receiveThreadsActionCreator(threads) {
@@ -55,6 +55,19 @@ function neutralVotesThreadCreator({ threadId, authUserId }) {
       threadId,
       authUserId,
     },
+  };
+}
+
+function asyncAddThread({ title, body, category }) {
+  return async (dispatch) => {
+    dispatch(showLoading());
+    try {
+      const thread = await api.createThread({ title, body, category });
+      dispatch(addThreadActionCreator(thread));
+    } catch (error) {
+      swal(error.message);
+    }
+    dispatch(hideLoading());
   };
 }
 
@@ -116,6 +129,7 @@ export {
   upVotesThreadCreator,
   downVotesThreadCreator,
   neutralVotesThreadCreator,
+  asyncAddThread,
   asyncUpVotesThread,
   asyncDownVotesThread,
   asyncNeutralVotesThread,
