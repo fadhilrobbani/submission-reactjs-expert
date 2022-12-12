@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import BottomBar from './components/BottomBar';
 import Navbar from './components/Navbar';
+import DetailThreadPage from './pages/DetailThreadPage';
 import HomePage from './pages/HomePage';
 import LeaderboardsPage from './pages/LeaderboardsPage';
 import LoginPage from './pages/LoginPage';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/leaderboards" element={<LeaderboardsPage />} />
+          <Route path="/threads/:id" element={<DetailThreadPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

@@ -7,10 +7,18 @@ function RegisterInput({ onRegister }) {
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
   const [confirmPassword, setConfirmPassword] = useInput('');
+
+  const onSubmitHandler = (ev) => {
+    ev.preventDefault();
+    onRegister({ name, email, password, confirmPassword });
+  };
   return (
     <div className="bg-slate-600 text-slate-200 w-3/4 h-fit max-w-lg py-3 mt-10 gap-6 rounded-lg flex flex-col items-center shadow-md">
       <h1 className="text-center font-bold text-xl">Login</h1>
-      <div className="w-4/5 flex flex-col gap-6 justify-center">
+      <form
+        onSubmit={onSubmitHandler}
+        className="w-4/5 flex flex-col gap-6 justify-center"
+      >
         <div className="flex flex-col gap-2 justify-center">
           <label htmlFor="name" className="font-semibold">
             <p>Name</p>
@@ -68,13 +76,12 @@ function RegisterInput({ onRegister }) {
           </label>
         </div>
         <button
-          onClick={() => onRegister({ name, email, password, confirmPassword })}
-          type="button"
+          type="submit"
           className=" text-slate-100 bg-teal-700 px-3 py-2 rounded-md hover:bg-teal-800 "
         >
           Register
         </button>
-      </div>
+      </form>
     </div>
   );
 }

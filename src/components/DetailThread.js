@@ -6,22 +6,21 @@ import {
   AiFillLike,
   AiFillDislike,
 } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
 import { BiCommentDetail } from 'react-icons/bi';
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
 import postedAt from '../utils';
 
-function ThreadItem({
+function DetailThread({
   threadId,
   title,
   body,
   category,
   createdAt,
+  owner,
   upVotesBy,
   downVotesBy,
-  totalComments,
-  owner,
+  comments,
   authUserId,
   onUpVotes,
   onDownVotes,
@@ -29,6 +28,8 @@ function ThreadItem({
 }) {
   const isThreadUpVotes = upVotesBy.includes(authUserId);
   const isThreadDownVotes = downVotesBy.includes(authUserId);
+  console.log(`upvotes: ${upVotesBy}  |   `);
+  console.log(`downvotes: ${downVotesBy}`);
 
   const onUpVotesClick = () => {
     if (!authUserId) {
@@ -59,12 +60,10 @@ function ThreadItem({
       <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
         <p>#{category}</p>
       </div>
-      <Link to={`/threads/${threadId}`}>
-        <h1 className="text-lg font-bold mb-5 mt-2 hover:text-teal-400">
-          {title}
-        </h1>
-      </Link>
-      <div className="line-clamp-4 mb-5">{parse(body)}</div>
+      <h1 className="text-lg font-bold mb-5 mt-2 hover:text-teal-400">
+        {title}
+      </h1>
+      <div className="mb-5">{parse(body)}</div>
       <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-500">
         <div className="flex flex-row gap-4">
           {isThreadUpVotes ? (
@@ -112,7 +111,7 @@ function ThreadItem({
           )}
           <div className="flex flex-row">
             <BiCommentDetail size={25} className="hover:cursor-pointer" />
-            <p> &nbsp;{totalComments}</p>
+            <p> &nbsp;{comments.length}</p>
           </div>
         </div>
         <div className="font-semibold">Created By {owner.name || 'null'}</div>
@@ -122,25 +121,36 @@ function ThreadItem({
   );
 }
 
-ThreadItem.propTypes = {
+const ownerShape = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string,
+  avatar: PropTypes.string.isRequired,
+};
+
+DetailThread.propTypes = {
   threadId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
+  owner: PropTypes.shape(ownerShape).isRequired,
   upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
   downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
-  totalComments: PropTypes.number.isRequired,
-  owner: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-  }).isRequired,
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      owner: PropTypes.shape(ownerShape).isRequired,
+      upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+      downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+    })
+  ).isRequired,
   authUserId: PropTypes.string.isRequired,
   onUpVotes: PropTypes.func.isRequired,
   onDownVotes: PropTypes.func.isRequired,
   onNeutralVotes: PropTypes.func.isRequired,
 };
 
-export default ThreadItem;
+export default DetailThread;
