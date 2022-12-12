@@ -30,7 +30,7 @@ function DetailThreadPage() {
 
   if (!detailThread) return null;
   return (
-    <div>
+    <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
       <DetailThread
         authUserId={authUser.id || ''}
         threadId={detailThread.id}

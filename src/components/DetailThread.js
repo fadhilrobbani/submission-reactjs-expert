@@ -10,6 +10,7 @@ import { BiCommentDetail } from 'react-icons/bi';
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
 import postedAt from '../utils';
+import CommentSection from './CommentSection';
 
 function DetailThread({
   threadId,
@@ -117,6 +118,8 @@ function DetailThread({
         <div className="font-semibold">Created By {owner.name || 'null'}</div>
         <div className="font-semibold">{postedAt(createdAt)}</div>
       </div>
+      <div className="w-full h-[2px] mt-4 bg-slate-100" />
+      <CommentSection />
     </div>
   );
 }

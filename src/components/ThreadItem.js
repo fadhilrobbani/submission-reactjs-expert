@@ -6,7 +6,7 @@ import {
   AiFillLike,
   AiFillDislike,
 } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BiCommentDetail } from 'react-icons/bi';
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
@@ -27,6 +27,7 @@ function ThreadItem({
   onDownVotes,
   onNeutralVotes,
 }) {
+  const navigate = useNavigate();
   const isThreadUpVotes = upVotesBy.includes(authUserId);
   const isThreadDownVotes = downVotesBy.includes(authUserId);
 
@@ -54,6 +55,14 @@ function ThreadItem({
     onNeutralVotes({ threadId, voteTypeBefore });
   };
 
+  const onCommentClick = () => {
+    if (!authUserId) {
+      swal('You must login to comment this post');
+      return;
+    }
+    navigate(`/threads/${threadId}`);
+  };
+
   return (
     <div className="bg-slate-600 w-full md:w-3/4 p-5 h-full rounded-lg ">
       <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
@@ -70,7 +79,7 @@ function ThreadItem({
           {isThreadUpVotes ? (
             <div className="flex flex-row">
               <AiFillLike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-teal-400"
                 size={25}
                 onClick={() =>
                   onNeutralVotesClick({ threadId, voteTypeBefore: 1 })
@@ -81,7 +90,7 @@ function ThreadItem({
           ) : (
             <div className="flex flex-row">
               <AiOutlineLike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-teal-400"
                 size={25}
                 onClick={() => onUpVotesClick(threadId)}
               />
@@ -92,7 +101,7 @@ function ThreadItem({
           {isThreadDownVotes ? (
             <div className="flex flex-row">
               <AiFillDislike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-pink-500"
                 size={25}
                 onClick={() =>
                   onNeutralVotesClick({ threadId, voteTypeBefore: -1 })
@@ -103,7 +112,7 @@ function ThreadItem({
           ) : (
             <div className="flex flex-row">
               <AiOutlineDislike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-pink-500"
                 size={25}
                 onClick={() => onDownVotesClick(threadId)}
               />
@@ -111,7 +120,11 @@ function ThreadItem({
             </div>
           )}
           <div className="flex flex-row">
-            <BiCommentDetail size={25} className="hover:cursor-pointer" />
+            <BiCommentDetail
+              onClick={() => onCommentClick()}
+              size={25}
+              className="hover:cursor-pointer hover:text-yellow-500"
+            />
             <p> &nbsp;{totalComments}</p>
           </div>
         </div>
