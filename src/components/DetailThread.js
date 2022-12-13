@@ -60,7 +60,7 @@ function DetailThread({
       <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
         <p>#{category}</p>
       </div>
-      <h1 className="text-lg font-bold mb-5 mt-2 hover:text-teal-400">
+      <h1 className="text-xl font-bold mb-5 mt-2 hover:text-teal-400">
         {title}
       </h1>
       <div className="mb-5">{parse(body)}</div>

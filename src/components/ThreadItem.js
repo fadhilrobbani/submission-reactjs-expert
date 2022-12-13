@@ -6,7 +6,8 @@ import {
   AiFillLike,
   AiFillDislike,
 } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { BiCommentDetail } from 'react-icons/bi';
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
@@ -27,7 +28,6 @@ function ThreadItem({
   onDownVotes,
   onNeutralVotes,
 }) {
-  const navigate = useNavigate();
   const isThreadUpVotes = upVotesBy.includes(authUserId);
   const isThreadDownVotes = downVotesBy.includes(authUserId);
 
@@ -55,21 +55,13 @@ function ThreadItem({
     onNeutralVotes({ threadId, voteTypeBefore });
   };
 
-  const onCommentClick = () => {
-    if (!authUserId) {
-      swal('You must login to comment this post');
-      return;
-    }
-    navigate(`/threads/${threadId}`);
-  };
-
   return (
     <div className="bg-slate-600 w-full md:w-3/4 p-5 h-full rounded-lg ">
       <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
         <p>#{category}</p>
       </div>
       <Link to={`/threads/${threadId}`}>
-        <h1 className="text-lg font-bold mb-5 mt-2 hover:text-teal-400">
+        <h1 className="text-xl font-bold mb-5 mt-2 hover:text-teal-400">
           {title}
         </h1>
       </Link>
@@ -120,11 +112,15 @@ function ThreadItem({
             </div>
           )}
           <div className="flex flex-row">
-            <BiCommentDetail
-              onClick={() => onCommentClick()}
-              size={25}
-              className="hover:cursor-pointer hover:text-yellow-500"
-            />
+            <HashLink
+              scroll={(el) => el.scrollIntoView({ behavior: 'smooth' })}
+              to={`/threads/${threadId}#comment`}
+            >
+              <BiCommentDetail
+                size={25}
+                className="hover:cursor-pointer hover:text-yellow-500"
+              />
+            </HashLink>
             <p> &nbsp;{totalComments}</p>
           </div>
         </div>

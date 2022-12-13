@@ -5,6 +5,7 @@ import api from '../../utils/api';
 const ActionType = {
   RECEIVE_DETAIL_THREAD: 'RECEIVE_DETAIL_THREAD',
   ADD_COMMENT_DETAIL_THREAD: 'ADD_COMMENT_DETAIL_THREAD',
+  CLEAR_DETAIL_THREAD: 'CLEAR_DETAIL_THREAD',
 };
 
 function receiveDetailThreadActionCreator(detailThread) {
@@ -13,6 +14,12 @@ function receiveDetailThreadActionCreator(detailThread) {
     payload: {
       detailThread,
     },
+  };
+}
+
+function clearDetailThreadActionCreator() {
+  return {
+    type: ActionType.CLEAR_DETAIL_THREAD,
   };
 }
 
@@ -28,6 +35,7 @@ function addCommentDetailThreadActionCreator(comment) {
 function asyncReceiveDetailThread(id) {
   return async (dispatch) => {
     dispatch(showLoading());
+    dispatch(clearDetailThreadActionCreator());
     try {
       const detailThread = await api.getDetailThread(id);
       dispatch(receiveDetailThreadActionCreator(detailThread));
@@ -57,4 +65,5 @@ export {
   receiveDetailThreadActionCreator,
   addCommentDetailThreadActionCreator,
   asyncAddCommentDetailThread,
+  clearDetailThreadActionCreator,
 };
