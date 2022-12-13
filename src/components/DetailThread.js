@@ -6,11 +6,11 @@ import {
   AiFillLike,
   AiFillDislike,
 } from 'react-icons/ai';
-import { BiCommentDetail } from 'react-icons/bi';
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
 import postedAt from '../utils';
 import CommentSection from './CommentSection';
+import CommentsList from './CommentsList';
 
 function DetailThread({
   threadId,
@@ -26,11 +26,10 @@ function DetailThread({
   onUpVotes,
   onDownVotes,
   onNeutralVotes,
+  onAddComment,
 }) {
   const isThreadUpVotes = upVotesBy.includes(authUserId);
   const isThreadDownVotes = downVotesBy.includes(authUserId);
-  console.log(`upvotes: ${upVotesBy}  |   `);
-  console.log(`downvotes: ${downVotesBy}`);
 
   const onUpVotesClick = () => {
     if (!authUserId) {
@@ -110,16 +109,13 @@ function DetailThread({
               <p> &nbsp;{downVotesBy.length}</p>
             </div>
           )}
-          <div className="flex flex-row">
-            <BiCommentDetail size={25} className="hover:cursor-pointer" />
-            <p> &nbsp;{comments.length}</p>
-          </div>
         </div>
         <div className="font-semibold">Created By {owner.name || 'null'}</div>
         <div className="font-semibold">{postedAt(createdAt)}</div>
       </div>
-      <div className="w-full h-[2px] mt-4 bg-slate-100" />
-      <CommentSection />
+
+      <CommentSection authUserId={authUserId} onAddComment={onAddComment} />
+      <CommentsList comments={comments} />
     </div>
   );
 }
@@ -154,6 +150,7 @@ DetailThread.propTypes = {
   onUpVotes: PropTypes.func.isRequired,
   onDownVotes: PropTypes.func.isRequired,
   onNeutralVotes: PropTypes.func.isRequired,
+  onAddComment: PropTypes.func.isRequired,
 };
 
 export default DetailThread;

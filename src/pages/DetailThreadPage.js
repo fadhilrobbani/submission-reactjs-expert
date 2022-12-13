@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import DetailThread from '../components/DetailThread';
-import { asyncReceiveDetailThread } from '../states/detailThread/action';
+import {
+  asyncAddCommentDetailThread,
+  asyncReceiveDetailThread,
+} from '../states/detailThread/action';
 import {
   asyncDownVotesThread,
   asyncNeutralVotesThread,
@@ -24,6 +27,10 @@ function DetailThreadPage() {
     dispatch(asyncNeutralVotesThread({ threadId, voteTypeBefore }));
   };
 
+  const onAddCommentHandler = (comment) => {
+    dispatch(asyncAddCommentDetailThread({ id, content: comment }));
+  };
+
   useEffect(() => {
     dispatch(asyncReceiveDetailThread(id));
   }, [dispatch]);
@@ -32,7 +39,7 @@ function DetailThreadPage() {
   return (
     <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
       <DetailThread
-        authUserId={authUser.id || ''}
+        authUserId={authUser?.id || ''}
         threadId={detailThread.id}
         title={detailThread.title}
         body={detailThread.body}
@@ -45,6 +52,7 @@ function DetailThreadPage() {
         onUpVotes={onUpVotesHandler}
         onDownVotes={onDownVotesHandler}
         onNeutralVotes={onNeutralVotesHandler}
+        onAddComment={onAddCommentHandler}
       />
     </div>
   );
