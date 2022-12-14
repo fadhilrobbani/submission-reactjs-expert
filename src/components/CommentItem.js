@@ -1,15 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import {
-//   AiOutlineLike,
-//   AiOutlineDislike,
-//   AiFillLike,
-//   AiFillDislike,
-// } from 'react-icons/ai';
+import {
+  AiOutlineLike,
+  AiOutlineDislike,
+  AiFillLike,
+  AiFillDislike,
+} from 'react-icons/ai';
 import parse from 'html-react-parser';
+import { useSelector } from 'react-redux';
+import swal from 'sweetalert';
 import postedAt from '../utils';
 
-function CommentItem({ comment }) {
+function CommentItem({
+  comment,
+  onUpVotesComment,
+  onDownVotesComment,
+  onNeutralVotesComment,
+}) {
+  const { authUser = null } = useSelector((states) => states);
+
+  const isCommentUpVotes = comment.upVotesBy.includes(authUser?.id);
+  const isCommentDownVotes = comment.downVotesBy.includes(authUser?.id);
+
+  const onUpVotesCommentClick = () => {
+    if (!authUser?.id) {
+      swal('You must login to like/dislike this comment');
+      return;
+    }
+    onUpVotesComment(comment.id);
+  };
+
+  const onDownVotesCommentClick = () => {
+    if (!authUser?.id) {
+      swal('You must login to like/dislike this comment');
+      return;
+    }
+    onDownVotesComment(comment.id);
+  };
+
+  const onNeutralVotesCommentClick = ({ voteTypeBefore }) => {
+    if (!authUser?.id) {
+      swal('You must login to like/dislike this comment');
+      return;
+    }
+    onNeutralVotesComment({ commentId: comment.id, voteTypeBefore });
+  };
+
   return (
     <div
       className="flex flex-col gap-4 bg-slate-500 rounded-lg p-4 relative"
@@ -26,6 +62,58 @@ function CommentItem({ comment }) {
           {postedAt(comment.createdAt)}
         </div>
         <div className="px-2">{parse(comment.content)}</div>
+        <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-600  mt-2">
+          <div className="flex flex-row gap-4">
+            {isCommentUpVotes ? (
+              <div className="flex flex-row">
+                <AiFillLike
+                  className="hover:cursor-pointer hover:text-teal-400"
+                  size={25}
+                  onClick={() =>
+                    onNeutralVotesCommentClick({
+                      commentId: comment.id,
+                      voteTypeBefore: 1,
+                    })
+                  }
+                />
+                <p> &nbsp;{comment.upVotesBy.length}</p>
+              </div>
+            ) : (
+              <div className="flex flex-row">
+                <AiOutlineLike
+                  className="hover:cursor-pointer hover:text-teal-400"
+                  size={25}
+                  onClick={() => onUpVotesCommentClick()}
+                />
+                <p> &nbsp;{comment.upVotesBy.length}</p>
+              </div>
+            )}
+
+            {isCommentDownVotes ? (
+              <div className="flex flex-row">
+                <AiFillDislike
+                  className="hover:cursor-pointer hover:text-pink-500"
+                  size={25}
+                  onClick={() =>
+                    onNeutralVotesCommentClick({
+                      voteTypeBefore: -1,
+                    })
+                  }
+                />
+                <p> &nbsp;{comment.downVotesBy.length}</p>
+              </div>
+            ) : (
+              <div className="flex flex-row">
+                <AiOutlineDislike
+                  className="hover:cursor-pointer hover:text-pink-500"
+                  size={25}
+                  onClick={() => onDownVotesCommentClick()}
+                />
+                <p> &nbsp;{comment.downVotesBy.length}</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -45,6 +133,9 @@ CommentItem.propTypes = {
     upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
     downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  onUpVotesComment: PropTypes.func.isRequired,
+  onDownVotesComment: PropTypes.func.isRequired,
+  onNeutralVotesComment: PropTypes.func.isRequired,
 };
 
 export default CommentItem;

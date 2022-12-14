@@ -86,8 +86,6 @@ function asyncUpVotesThread(threadId) {
     const { authUser } = getState();
     dispatch(showLoading());
     dispatch(upVotesThreadCreator({ threadId, authUserId: authUser.id }));
-    console.log('ketrigger');
-
     try {
       await api.upVoteThread(threadId);
     } catch (error) {
@@ -103,8 +101,6 @@ function asyncDownVotesThread(threadId) {
     const { authUser } = getState();
     dispatch(showLoading());
     dispatch(downVotesThreadCreator({ threadId, authUserId: authUser.id }));
-    console.log('ketrigger');
-
     try {
       await api.downVoteThread(threadId);
     } catch (error) {
@@ -119,8 +115,6 @@ function asyncNeutralVotesThread({ threadId, voteTypeBefore }) {
   return async (dispatch, getState) => {
     const { authUser } = getState();
     dispatch(showLoading());
-    console.log(threadId);
-    console.log(voteTypeBefore);
     dispatch(neutralVotesThreadCreator({ threadId, authUserId: authUser.id }));
     try {
       await api.neutralVoteThread(threadId);

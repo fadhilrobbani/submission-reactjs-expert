@@ -2,13 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
 
-function CommentsList({ comments }) {
+function CommentsList({
+  comments,
+  onUpVotesComment,
+  onDownVotesComment,
+  onNeutralVotesComment,
+}) {
   return (
     <div className="mt-4">
       <p className="font-semibold text-lg">{`Comments (${comments.length}): `}</p>
       <div className="flex flex-col gap-5 mt-4">
         {comments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} />
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            onUpVotesComment={onUpVotesComment}
+            onDownVotesComment={onDownVotesComment}
+            onNeutralVotesComment={onNeutralVotesComment}
+          />
         ))}
       </div>
     </div>
@@ -31,6 +42,9 @@ CommentsList.propTypes = {
       downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
     })
   ).isRequired,
+  onUpVotesComment: PropTypes.func.isRequired,
+  onDownVotesComment: PropTypes.func.isRequired,
+  onNeutralVotesComment: PropTypes.func.isRequired,
 };
 
 export default CommentsList;

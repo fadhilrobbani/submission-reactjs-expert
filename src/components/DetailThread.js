@@ -27,6 +27,9 @@ function DetailThread({
   onDownVotes,
   onNeutralVotes,
   onAddComment,
+  onUpVotesComment,
+  onDownVotesComment,
+  onNeutralVotesComment,
 }) {
   const isThreadUpVotes = upVotesBy.includes(authUserId);
   const isThreadDownVotes = downVotesBy.includes(authUserId);
@@ -115,7 +118,12 @@ function DetailThread({
       </div>
 
       <CommentInput authUserId={authUserId} onAddComment={onAddComment} />
-      <CommentsList comments={comments} />
+      <CommentsList
+        comments={comments}
+        onUpVotesComment={onUpVotesComment}
+        onDownVotesComment={onDownVotesComment}
+        onNeutralVotesComment={onNeutralVotesComment}
+      />
     </div>
   );
 }
@@ -151,6 +159,9 @@ DetailThread.propTypes = {
   onDownVotes: PropTypes.func.isRequired,
   onNeutralVotes: PropTypes.func.isRequired,
   onAddComment: PropTypes.func.isRequired,
+  onUpVotesComment: PropTypes.func.isRequired,
+  onDownVotesComment: PropTypes.func.isRequired,
+  onNeutralVotesComment: PropTypes.func.isRequired,
 };
 
 export default DetailThread;
