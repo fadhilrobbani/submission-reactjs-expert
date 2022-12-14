@@ -1,22 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-import { asyncUnsetAuthUser } from '../states/authUser/action';
+import PropTypes from 'prop-types';
 
-function BottomBar() {
+function BottomBar({ onLogoutHandler }) {
   const { authUser = null } = useSelector((states) => states);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const onLogoutHandler = () => {
-    if (authUser) {
-      dispatch(asyncUnsetAuthUser());
-      navigate('/login');
-    } else {
-      navigate('/login');
-    }
-  };
   return (
     <div>
       <div className="btm-nav z-50 bg-slate-700 text-slate-100">
@@ -87,5 +78,9 @@ function BottomBar() {
     </div>
   );
 }
+
+BottomBar.propTypes = {
+  onLogoutHandler: PropTypes.func.isRequired,
+};
 
 export default BottomBar;

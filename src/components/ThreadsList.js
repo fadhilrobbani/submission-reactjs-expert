@@ -28,7 +28,19 @@ function ThreadsList({ threads, onUpVotes, onDownVotes, onNeutralVotes }) {
 }
 
 ThreadsList.propTypes = {
-  threads: PropTypes.arrayOf(PropTypes.object).isRequired,
+  threads: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      ownerId: PropTypes.string.isRequired,
+      upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+      downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+      totalComments: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   onUpVotes: PropTypes.func.isRequired,
   onDownVotes: PropTypes.func.isRequired,
   onNeutralVotes: PropTypes.func.isRequired,

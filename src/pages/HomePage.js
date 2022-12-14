@@ -6,8 +6,10 @@ import {
   asyncDownVotesThread,
   asyncNeutralVotesThread,
   asyncUpVotesThread,
+  filterThreadsActionCreator,
 } from '../states/threads/action';
 import AddThreadButton from '../components/AddThreadButton';
+import CategoriesList from '../components/CategoriesList';
 
 function HomePage() {
   const {
@@ -27,6 +29,10 @@ function HomePage() {
     dispatch(asyncNeutralVotesThread({ threadId, voteTypeBefore }));
   };
 
+  const onSetCategoryHandler = (category) => {
+    dispatch(filterThreadsActionCreator(category));
+  };
+
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
@@ -38,6 +44,7 @@ function HomePage() {
   }));
   return (
     <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
+      <CategoriesList onSetCategory={onSetCategoryHandler} threads={threads} />
       <ThreadsList
         threads={threadsList}
         onUpVotes={onUpVotesHandler}

@@ -4,6 +4,7 @@ import api from '../../utils/api';
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
+  FILTER_THREADS: 'FILTER_THREADS',
   UP_VOTES_THREADS: 'UP_VOTES_THREADS',
   DOWN_VOTES_THREADS: 'DOWN_VOTES_THREADS',
   NEUTRAL_VOTES_THREADS: 'NEUTRAL_VOTES_THREADS',
@@ -15,6 +16,15 @@ function receiveThreadsActionCreator(threads) {
     type: ActionType.RECEIVE_THREADS,
     payload: {
       threads,
+    },
+  };
+}
+
+function filterThreadsActionCreator(category) {
+  return {
+    type: ActionType.FILTER_THREADS,
+    payload: {
+      category,
     },
   };
 }
@@ -131,6 +141,7 @@ function asyncNeutralVotesThread({ threadId, voteTypeBefore }) {
 export {
   ActionType,
   receiveThreadsActionCreator,
+  filterThreadsActionCreator,
   addThreadActionCreator,
   upVotesThreadCreator,
   downVotesThreadCreator,

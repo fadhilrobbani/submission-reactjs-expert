@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import parse from 'html-react-parser';
-import postedAt from '../utils';
+import CommentItem from './CommentItem';
 
 function CommentsList({ comments }) {
   return (
@@ -9,23 +8,7 @@ function CommentsList({ comments }) {
       <p className="font-semibold text-lg">{`Comments (${comments.length}): `}</p>
       <div className="flex flex-col gap-5 mt-4">
         {comments.map((comment) => (
-          <div
-            className="flex flex-col gap-4 bg-slate-500 rounded-lg p-4 relative"
-            key={comment.id}
-          >
-            <div className="flex flex-row  items-center gap-3">
-              <div className="mask mask-squircle w-12 h-12">
-                <img src={comment.owner.avatar} alt="avatar" />
-              </div>
-              <div className="font-bold text-lg">{comment.owner.name}</div>
-            </div>
-            <div>
-              <div className="absolute top-4 right-4">
-                {postedAt(comment.createdAt)}
-              </div>
-              <div className="">{parse(comment.content)}</div>
-            </div>
-          </div>
+          <CommentItem key={comment.id} comment={comment} />
         ))}
       </div>
     </div>

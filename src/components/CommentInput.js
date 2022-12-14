@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function CommentSection({ authUserId, onAddComment }) {
+function CommentInput({ authUserId, onAddComment }) {
   const [comment, setComment] = useState('');
   const onClickAddComment = () => {
     onAddComment(comment);
@@ -46,9 +46,9 @@ function CommentSection({ authUserId, onAddComment }) {
   );
 }
 
-CommentSection.propTypes = {
+CommentInput.propTypes = {
   authUserId: PropTypes.string.isRequired,
   onAddComment: PropTypes.func.isRequired,
 };
 
-export default CommentSection;
+export default CommentInput;

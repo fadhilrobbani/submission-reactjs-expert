@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import BottomBar from './components/BottomBar';
 import Navbar from './components/Navbar';
 import DetailThreadPage from './pages/DetailThreadPage';
@@ -10,16 +10,28 @@ import LoginPage from './pages/LoginPage';
 import NewThreadPage from './pages/NewThreadPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
+import { asyncUnsetAuthUser } from './states/authUser/action';
 import { asyncPreloadProcess } from './states/isPreload/action';
 
 function App() {
-  const { isPreload = false } = useSelector((states) => states);
+  const { isPreload = false, authUser = null } = useSelector(
+    (states) => states
+  );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
 
+  const onLogoutHandler = () => {
+    if (authUser) {
+      dispatch(asyncUnsetAuthUser());
+      navigate('/login');
+    } else {
+      navigate('/login');
+    }
+  };
   if (isPreload) {
     return null;
   }
@@ -40,7 +52,7 @@ function App() {
         </Routes>
       </main>
       <footer>
-        <BottomBar />
+        <BottomBar onLogoutHandler={onLogoutHandler} />
       </footer>
     </>
   );

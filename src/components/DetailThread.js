@@ -9,7 +9,7 @@ import {
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
 import postedAt from '../utils';
-import CommentSection from './CommentSection';
+import CommentInput from './CommentInput';
 import CommentsList from './CommentsList';
 
 function DetailThread({
@@ -114,7 +114,7 @@ function DetailThread({
         <div className="font-semibold">{postedAt(createdAt)}</div>
       </div>
 
-      <CommentSection authUserId={authUserId} onAddComment={onAddComment} />
+      <CommentInput authUserId={authUserId} onAddComment={onAddComment} />
       <CommentsList comments={comments} />
     </div>
   );
