@@ -130,16 +130,22 @@ function asyncAddCommentDetailThread({ id, content }) {
 
 function asyncUpVotesDetailThread(threadId) {
   return async (dispatch, getState) => {
-    const { authUser } = getState();
+    const { authUser, detailThread } = getState();
     dispatch(showLoading());
     dispatch(upVotesDetailThreadCreator({ threadId, authUserId: authUser.id }));
     try {
       await api.upVoteThread(threadId);
     } catch (error) {
       swal(error.message);
-      dispatch(
-        downVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
-      );
+      if (detailThread.downVotesBy.includes(authUser.id)) {
+        dispatch(
+          downVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
+        );
+      } else {
+        dispatch(
+          neutralVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
+        );
+      }
     }
     dispatch(hideLoading());
   };
@@ -147,7 +153,7 @@ function asyncUpVotesDetailThread(threadId) {
 
 function asyncDownVotesDetailThread(threadId) {
   return async (dispatch, getState) => {
-    const { authUser } = getState();
+    const { authUser, detailThread } = getState();
     dispatch(showLoading());
     dispatch(
       downVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
@@ -156,9 +162,15 @@ function asyncDownVotesDetailThread(threadId) {
       await api.downVoteThread(threadId);
     } catch (error) {
       swal(error.message);
-      dispatch(
-        upVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
-      );
+      if (detailThread.upVotesBy.includes(authUser.id)) {
+        dispatch(
+          upVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
+        );
+      } else {
+        dispatch(
+          neutralVotesDetailThreadCreator({ threadId, authUserId: authUser.id })
+        );
+      }
     }
     dispatch(hideLoading());
   };
@@ -193,7 +205,7 @@ function asyncNeutralVotesDetailThread({ threadId, voteTypeBefore }) {
 
 function asyncUpVotesComment({ threadId, commentId }) {
   return async (dispatch, getState) => {
-    const { authUser } = getState();
+    const { authUser, detailThread } = getState();
     dispatch(showLoading());
     dispatch(
       upVotesCommentActionCreator({
@@ -206,13 +218,26 @@ function asyncUpVotesComment({ threadId, commentId }) {
       await api.upVoteComment({ threadId, commentId });
     } catch (error) {
       swal(error.message);
-      dispatch(
-        downVotesCommentActionCreator({
-          threadId,
-          commentId,
-          authUserId: authUser.id,
-        })
-      );
+      const { downVotesBy } = detailThread.comments.filter(
+        (comment) => comment.id === commentId
+      )[0];
+      if (downVotesBy.includes(authUser.id)) {
+        dispatch(
+          downVotesCommentActionCreator({
+            threadId,
+            commentId,
+            authUserId: authUser.id,
+          })
+        );
+      } else {
+        dispatch(
+          neutralVotesCommentActionCreator({
+            threadId,
+            commentId,
+            authUserId: authUser.id,
+          })
+        );
+      }
     }
     dispatch(hideLoading());
   };
@@ -220,7 +245,7 @@ function asyncUpVotesComment({ threadId, commentId }) {
 
 function asyncDownVotesComment({ threadId, commentId }) {
   return async (dispatch, getState) => {
-    const { authUser } = getState();
+    const { authUser, detailThread } = getState();
     dispatch(showLoading());
     dispatch(
       downVotesCommentActionCreator({
@@ -233,13 +258,26 @@ function asyncDownVotesComment({ threadId, commentId }) {
       await api.downVoteComment({ threadId, commentId });
     } catch (error) {
       swal(error.message);
-      dispatch(
-        upVotesCommentActionCreator({
-          threadId,
-          commentId,
-          authUserId: authUser.id,
-        })
-      );
+      const { upVotesBy } = detailThread.comments.filter(
+        (comment) => comment.id === commentId
+      )[0];
+      if (upVotesBy.includes(authUser.id)) {
+        dispatch(
+          upVotesCommentActionCreator({
+            threadId,
+            commentId,
+            authUserId: authUser.id,
+          })
+        );
+      } else {
+        dispatch(
+          neutralVotesCommentActionCreator({
+            threadId,
+            commentId,
+            authUserId: authUser.id,
+          })
+        );
+      }
     }
     dispatch(hideLoading());
   };
