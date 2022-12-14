@@ -211,6 +211,11 @@ const api = (() => {
     if (status !== 'success') {
       throw new Error(message);
     }
+
+    const {
+      data: { vote },
+    } = responseJson;
+    return vote;
   }
 
   async function downVoteThread(id) {
@@ -228,6 +233,11 @@ const api = (() => {
     if (status !== 'success') {
       throw new Error(message);
     }
+
+    const {
+      data: { vote },
+    } = responseJson;
+    return vote;
   }
 
   async function neutralVoteThread(id) {
@@ -245,6 +255,10 @@ const api = (() => {
     if (status !== 'success') {
       throw new Error(message);
     }
+    const {
+      data: { vote },
+    } = responseJson;
+    return vote;
   }
 
   async function upVoteComment({ threadId, commentId }) {
@@ -262,6 +276,11 @@ const api = (() => {
     if (status !== 'success') {
       throw new Error(message);
     }
+
+    const {
+      data: { vote },
+    } = responseJson;
+    return vote;
   }
 
   async function downVoteComment({ threadId, commentId }) {
@@ -279,6 +298,11 @@ const api = (() => {
     if (status !== 'success') {
       throw new Error(message);
     }
+
+    const {
+      data: { vote },
+    } = responseJson;
+    return vote;
   }
 
   async function neutralVoteComment({ threadId, commentId }) {
@@ -296,6 +320,11 @@ const api = (() => {
     if (status !== 'success') {
       throw new Error(message);
     }
+
+    const {
+      data: { vote },
+    } = responseJson;
+    return vote;
   }
 
   async function getLeaderboards() {

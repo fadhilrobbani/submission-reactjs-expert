@@ -14,7 +14,9 @@ import {
 } from '../states/detailThread/action';
 
 function DetailThreadPage() {
-  const { detailThread = null, authUser } = useSelector((states) => states);
+  const { detailThread = null, authUser = null } = useSelector(
+    (states) => states
+  );
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -56,7 +58,7 @@ function DetailThreadPage() {
   return (
     <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
       <DetailThread
-        authUserId={authUser.id}
+        authUserId={authUser?.id || ''}
         threadId={detailThread.id}
         title={detailThread.title}
         body={detailThread.body}
