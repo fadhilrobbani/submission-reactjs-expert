@@ -72,7 +72,7 @@ function DetailThread({
           {isThreadUpVotes ? (
             <div className="flex flex-row">
               <AiFillLike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-teal-400"
                 size={25}
                 onClick={() =>
                   onNeutralVotesClick({ threadId, voteTypeBefore: 1 })
@@ -83,7 +83,7 @@ function DetailThread({
           ) : (
             <div className="flex flex-row">
               <AiOutlineLike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-teal-400"
                 size={25}
                 onClick={() => onUpVotesClick(threadId)}
               />
@@ -94,7 +94,7 @@ function DetailThread({
           {isThreadDownVotes ? (
             <div className="flex flex-row">
               <AiFillDislike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-pink-500"
                 size={25}
                 onClick={() =>
                   onNeutralVotesClick({ threadId, voteTypeBefore: -1 })
@@ -105,7 +105,7 @@ function DetailThread({
           ) : (
             <div className="flex flex-row">
               <AiOutlineDislike
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:text-pink-500"
                 size={25}
                 onClick={() => onDownVotesClick(threadId)}
               />

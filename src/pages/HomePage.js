@@ -6,15 +6,16 @@ import {
   asyncDownVotesThread,
   asyncNeutralVotesThread,
   asyncUpVotesThread,
-  filterThreadsActionCreator,
 } from '../states/threads/action';
 import AddThreadButton from '../components/AddThreadButton';
 import CategoriesList from '../components/CategoriesList';
+import { setCategoriesActionCreator } from '../states/categories/action';
 
 function HomePage() {
   const {
     threads = [],
     users = [],
+    categories,
     authUser,
   } = useSelector((states) => states);
   const dispatch = useDispatch();
@@ -30,18 +31,22 @@ function HomePage() {
   };
 
   const onSetCategoryHandler = (category) => {
-    dispatch(filterThreadsActionCreator(category));
+    dispatch(setCategoriesActionCreator(category));
+    console.log(category);
   };
 
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
+    console.log(categories);
   }, [dispatch]);
 
-  const threadsList = threads.map((thread) => ({
-    ...thread,
-    owner: users.find((user) => user.id === thread.ownerId),
-    authUserId: authUser ? authUser.id : '',
-  }));
+  const threadsList = threads
+    .map((thread) => ({
+      ...thread,
+      owner: users.find((user) => user.id === thread.ownerId),
+      authUserId: authUser ? authUser.id : '',
+    }))
+    .filter((thread) => (categories ? thread.category === categories : true));
   return (
     <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
       <CategoriesList onSetCategory={onSetCategoryHandler} threads={threads} />
