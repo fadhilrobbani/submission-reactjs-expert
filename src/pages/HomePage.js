@@ -31,13 +31,15 @@ function HomePage() {
   };
 
   const onSetCategoryHandler = (category) => {
-    dispatch(setCategoriesActionCreator(category));
-    console.log(category);
+    if (categories === category) {
+      dispatch(setCategoriesActionCreator(''));
+    } else {
+      dispatch(setCategoriesActionCreator(category));
+    }
   };
 
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
-    console.log(categories);
   }, [dispatch]);
 
   const threadsList = threads
@@ -49,7 +51,11 @@ function HomePage() {
     .filter((thread) => (categories ? thread.category === categories : true));
   return (
     <div className=" text-slate-200  justify-center items-center p-10 pb-20 flex flex-col gap-7">
-      <CategoriesList onSetCategory={onSetCategoryHandler} threads={threads} />
+      <CategoriesList
+        onSetCategory={onSetCategoryHandler}
+        threads={threads}
+        categories={categories}
+      />
       <ThreadsList
         threads={threadsList}
         onUpVotes={onUpVotesHandler}
