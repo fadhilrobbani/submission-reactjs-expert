@@ -61,7 +61,7 @@ function ThreadItem({
         <p>#{category}</p>
       </div>
       <Link to={`/threads/${threadId}`}>
-        <h1 className="text-xl font-bold mb-5 mt-2 hover:text-teal-400">
+        <h1 className="text-xl underline font-bold mb-5 mt-2 hover:text-teal-400">
           {title}
         </h1>
       </Link>

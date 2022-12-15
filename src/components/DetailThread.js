@@ -59,20 +59,19 @@ function DetailThread({
   };
 
   return (
-    <div className="bg-slate-600 w-full md:w-3/4 p-5 h-full rounded-lg ">
-      <div className="flex flex-row gap-4">
+    <div className="bg-slate-600 w-full md:w-3/4 p-5 h-full rounded-lg relative">
+      <div className="ring-1 absolute top-3 right-3 rounded-lg px-2 ring-slate-100 w-fit">
+        <p>#{category}</p>
+      </div>
+      <div className="flex flex-row items-center gap-2 ">
         <img
           src={owner.avatar}
           alt="avatar"
-          className="mask mask-squircle w-16 h-16"
+          className="mask mask-squircle w-12 h-12"
         />
-        <div>
-          <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
-            <p>#{category}</p>
-          </div>
-          <h1 className="text-xl font-bold mb-5 mt-2">{title}</h1>
-        </div>
+        <h1 className="text-lg font-bold ">{owner.name}</h1>
       </div>
+      <div className="text-2xl font-bold mt-4 mb-1">{title}</div>
       <div className="mb-5">{parse(body)}</div>
       <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-500">
         <div className="flex flex-row gap-4">
@@ -120,7 +119,6 @@ function DetailThread({
             </div>
           )}
         </div>
-        <div className="font-semibold">Created By {owner.name || 'null'}</div>
         <div className="font-semibold">{postedAt(createdAt)}</div>
       </div>
 

@@ -109,7 +109,7 @@ function CommentItem({
                 <p> &nbsp;{comment.downVotesBy.length}</p>
               </div>
             )}
-            <div className="italic">{postedAt(comment.createdAt)}</div>
+            <div className="font-semibold">{postedAt(comment.createdAt)}</div>
           </div>
         </div>
       </div>
