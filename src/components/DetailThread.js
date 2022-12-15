@@ -60,12 +60,21 @@ function DetailThread({
 
   return (
     <div className="bg-slate-600 w-full md:w-3/4 p-5 h-full rounded-lg ">
-      <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
-        <p>#{category}</p>
+      <div className="flex flex-row gap-4">
+        <img
+          src={owner.avatar}
+          alt="avatar"
+          className="mask mask-squircle w-16 h-16"
+        />
+        <div>
+          <div className="ring-1 rounded-lg px-2 ring-slate-100 w-fit">
+            <p>#{category}</p>
+          </div>
+          <h1 className="text-xl font-bold mb-5 mt-2 hover:text-teal-400">
+            {title}
+          </h1>
+        </div>
       </div>
-      <h1 className="text-xl font-bold mb-5 mt-2 hover:text-teal-400">
-        {title}
-      </h1>
       <div className="mb-5">{parse(body)}</div>
       <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-500">
         <div className="flex flex-row gap-4">

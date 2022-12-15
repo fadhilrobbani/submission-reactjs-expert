@@ -4,7 +4,7 @@ import ThreadItem from './ThreadItem';
 
 function ThreadsList({ threads, onUpVotes, onDownVotes, onNeutralVotes }) {
   return (
-    <div className="flex flex-col gap-5 pt-0 justify-center items-center p-5">
+    <div className="flex flex-col gap-5 pt-0 w-full justify-center items-center p-5">
       {threads.map((thread) => (
         <ThreadItem
           key={thread.id}

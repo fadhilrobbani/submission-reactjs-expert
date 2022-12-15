@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 function CategoriesList({ onSetCategory, threads, categories }) {
   return (
-    <div className=" bg-slate-500  rounded-lg p-1">
+    <div className="rounded-lg p-1">
       {threads.map((thread) => (
         <button
           className={
             categories === thread.category
-              ? 'm-3 p-2 rounded-lg  bg-teal-600 ring-1 ring-slate-100 hover:bg-teal-600'
-              : 'm-3 ring-1 p-2 ring-slate-100 rounded-lg bg-transparent hover:bg-teal-600'
+              ? 'm-3 p-2 rounded-lg  bg-teal-600 ring-1 ring-teal-600 hover:bg-teal-600'
+              : 'm-3 ring-1 p-2 ring-slate-100 rounded-lg bg-transparent hover:bg-teal-600 hover:ring-teal-600'
           }
           type="button"
           key={thread.id}

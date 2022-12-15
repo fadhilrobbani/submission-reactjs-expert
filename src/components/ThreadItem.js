@@ -65,8 +65,8 @@ function ThreadItem({
           {title}
         </h1>
       </Link>
-      <div className="line-clamp-4 mb-5">{parse(body)}</div>
-      <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg bg-slate-500">
+      <div className="line-clamp-5 mb-5">{parse(body)}</div>
+      <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full rounded-lg bg-slate-500">
         <div className="flex flex-row gap-4">
           {isThreadUpVotes ? (
             <div className="flex flex-row">
