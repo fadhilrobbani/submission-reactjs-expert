@@ -14,7 +14,7 @@ function RegisterInput({ onRegister }) {
   };
   return (
     <div className="bg-slate-600 text-slate-200 w-3/4 h-fit max-w-lg py-3 mt-10 gap-6 rounded-lg flex flex-col items-center shadow-md">
-      <h1 className="text-center font-bold text-xl">Login</h1>
+      <h1 className="text-center font-bold text-xl">Register</h1>
       <form
         onSubmit={onSubmitHandler}
         className="w-4/5 flex flex-col gap-6 justify-center"
@@ -30,6 +30,7 @@ function RegisterInput({ onRegister }) {
               value={name}
               placeholder="Your Name"
               onChange={setName}
+              required
             />
           </label>
         </div>
@@ -44,6 +45,7 @@ function RegisterInput({ onRegister }) {
               value={email}
               placeholder="youremail@example.com"
               onChange={setEmail}
+              required
             />
           </label>
         </div>
@@ -58,6 +60,7 @@ function RegisterInput({ onRegister }) {
               value={password}
               placeholder="******"
               onChange={setPassword}
+              required
             />
           </label>
         </div>
@@ -72,6 +75,7 @@ function RegisterInput({ onRegister }) {
               value={confirmPassword}
               placeholder="******"
               onChange={setConfirmPassword}
+              required
             />
           </label>
         </div>

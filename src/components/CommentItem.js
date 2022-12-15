@@ -58,9 +58,6 @@ function CommentItem({
         <div className="font-bold text-lg">{comment.owner.name}</div>
       </div>
       <div>
-        <div className="absolute top-4 right-4">
-          {postedAt(comment.createdAt)}
-        </div>
         <div className="px-2">{parse(comment.content)}</div>
         <div className="flex flex-col sm:flex-row sm:gap-4  items-center p-2 w-full sm:w-fit rounded-lg  mt-2">
           <div className="flex flex-row gap-4">
@@ -112,6 +109,7 @@ function CommentItem({
                 <p> &nbsp;{comment.downVotesBy.length}</p>
               </div>
             )}
+            <div className="italic">{postedAt(comment.createdAt)}</div>
           </div>
         </div>
       </div>

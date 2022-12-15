@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -18,6 +18,12 @@ function NewThreadPage() {
     dispatch(asyncAddThread({ title, body, category }));
     navigate('/');
   };
+
+  useEffect(() => {
+    if (!authUser) {
+      navigate('/');
+    }
+  });
 
   if (!authUser) return null;
   return (
